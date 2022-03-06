@@ -8,3 +8,10 @@ script = ExtResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 64, 64 )
+
+[node name="Outbounds" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Outbounds"]
+polygon = PoolVector2Array( -1, 383, 0, 1, 385, 1, 385, 385, 411, 411, 413, -41, -33, -39, -34, 419, 411, 415, 385, 385 )
+
+[connection signal="area_entered" from="Outbounds" to="." method="_on_Outbounds_area_entered"]

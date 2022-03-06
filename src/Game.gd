@@ -5,7 +5,7 @@ var row = 12
 var col = 12
 var size = Vector2(32,32)
 var grid_size = 32
-var colors = [Color.blueviolet,Color.hotpink]
+var colors = [Color.coral,Color.aquamarine]
 
 onready var dancer = preload("res://scenes/Dancer.tscn")
 
@@ -38,3 +38,9 @@ func spawn_dancer():
 func spawn_new():
 	points += 5
 	spawn_dancer()
+
+
+func _on_Outbounds_area_entered(area):
+	if area.name == "Player":
+# warning-ignore:return_value_discarded
+		get_tree().reload_current_scene()
