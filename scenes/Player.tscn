@@ -7,6 +7,7 @@
 height = 0.0
 
 [node name="Player" type="Node2D"]
+pause_mode = 1
 script = ExtResource( 2 )
 
 [node name="Tween" type="Tween" parent="."]

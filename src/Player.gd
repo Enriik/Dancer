@@ -1,11 +1,12 @@
 extends Node2D
 
-var direction = Vector2.ZERO
-var grid_size = 32
-var snake = []
-var head_pos = Vector2.ZERO
-var current_tail_pos = Vector2.ZERO
-var last_tail_pos = Vector2.ZERO
+var direction := Vector2.ZERO
+var grid_size := 32
+var snake := []
+var head_pos := Vector2.ZERO
+var current_tail_pos := Vector2.ZERO
+var last_tail_pos := Vector2.ZERO
+var can_move := true
 
 onready var tween = $Tween
 onready var timer = $Timer
@@ -16,34 +17,40 @@ onready var dancer = preload("res://scenes/Dancer.tscn")
 func _ready():
 	snake.append($Player)
 
-#func _unhandled_input(event):
-#	if event.is_action_pressed("ui_down"):
-#		direction = Vector2.DOWN
-#	if event.is_action_pressed("ui_left"):
-#		direction = Vector2.LEFT
-#	if event.is_action_pressed("ui_right"):
-#		direction = Vector2.RIGHT
-#	if event.is_action_pressed("ui_up"):
-#		direction = Vector2.UP
-#
-#	last_tail_pos = head_pos + direction * grid_size
-#
-#	if !tween.is_active():
-#		move(direction)
-
-# warning-ignore:unused_argument
-func _process(delta):
-	if Input.is_action_pressed("ui_down"):
+#player moves on input
+func _unhandled_key_input(event):
+	if event.is_action_pressed("ui_down") and can_move:
+		can_move = false
 		direction = Vector2.DOWN
-	if Input.is_action_pressed("ui_left"):
+	if event.is_action_pressed("ui_left") and can_move:
 		direction = Vector2.LEFT
-	if Input.is_action_pressed("ui_right"):
+		can_move = false
+	if event.is_action_pressed("ui_right") and can_move:
 		direction = Vector2.RIGHT
-	if Input.is_action_pressed("ui_up"):
+		can_move = false
+	if event.is_action_pressed("ui_up") and can_move:
 		direction = Vector2.UP
-		
+		can_move = false
+
+# player moves automatically
+# warning-ignore:unused_argument
+#func _process(delta):
+#	if Input.is_action_just_pressed("ui_down") and can_move:
+#		can_move = false
+#		direction = Vector2.DOWN
+#	if Input.is_action_just_pressed("ui_left") and can_move:
+#		can_move = false
+#		direction = Vector2.LEFT
+#	if Input.is_action_just_pressed("ui_right") and can_move:
+#		can_move = false
+#		direction = Vector2.RIGHT
+#	if Input.is_action_just_pressed("ui_up") and can_move:
+#		can_move = false
+#		direction = Vector2.UP
+
+#common for both player movements
 	last_tail_pos = head_pos + direction * grid_size
-	
+
 	if !tween.is_active():
 		move(direction)
 
@@ -75,6 +82,8 @@ func move(dir: Vector2):
 				Tween.EASE_IN)	
 			tween.start()
 			last_tail_pos = current_tail_pos
+	
+	can_move = true
 
 func _on_Head_area_entered(area):
 	if area.name == "Dancer":

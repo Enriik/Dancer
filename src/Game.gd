@@ -1,13 +1,15 @@
 extends Node2D
 
-var points = 0
-var row = 12
-var col = 12
-var size = Vector2(32,32)
-var grid_size = 32
-var colors = [Color.coral,Color.aquamarine]
+var points := 0
+var row := 12
+var col := 12
+var size := Vector2(32,32)
+var grid_size := 32
+var colors := [Color.coral,Color.aquamarine]
 
-onready var dancer = preload("res://scenes/Dancer.tscn")
+export var enabled := true
+
+onready var dancer := preload("res://scenes/Dancer.tscn")
 
 func _ready():
 	randomize()
@@ -44,3 +46,11 @@ func _on_Outbounds_area_entered(area):
 	if area.name == "Player":
 # warning-ignore:return_value_discarded
 		get_tree().reload_current_scene()
+		
+func _spawn_beat(msg: Dictionary) -> void:
+	# If the spawner is not enabled, we just return from the function and spawn
+	# nothing.
+	if not enabled:
+		return
+
+	print(msg.half_beat)
