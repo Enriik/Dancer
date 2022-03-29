@@ -7,6 +7,7 @@ onready var _tween := $Tween
 
 
 func _ready():
+# warning-ignore:return_value_discarded
 	Events.connect("beat_incremented", self, "_pulse")
 
 

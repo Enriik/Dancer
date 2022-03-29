@@ -17,5 +17,3 @@ func _spawn_beat(msg: Dictionary) -> void:
 	# nothing.
 	if not enabled:
 		return
-
-	print(msg.half_beat)

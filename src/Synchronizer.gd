@@ -26,7 +26,7 @@ func _process(_delta: float) -> void:
 		+ AudioServer.get_time_since_last_mix()
 		- AudioServer.get_output_latency()
 	)
-
+	Events.emit_signal("song_time",{"time" : time})
 	var half_beat := int(time / _hbps)
 
 	if half_beat > _last_half_beat:

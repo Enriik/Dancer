@@ -4,6 +4,7 @@ var _total_score := 0
 
 
 func _ready() -> void:
+# warning-ignore:return_value_discarded
 	Events.connect("scored", self, "_add_score")
 
 
